@@ -1,0 +1,40 @@
+{
+  "name": "embryo",
+  "preferGlobal": "true",
+  "version": "0.0.1",
+  "engines" : {
+    "node" : ">=0.8"
+  },
+  "author": {
+    "name": "Tierry Danquin",
+    "email": "tierry.danquin@gmail.com",
+    "url": "http://www.oothkoo.com"
+  },  
+  "homepage" : "https://github.com/oOthkOo/embryo.js",
+  "description": "The most simple, customizable and easy to use JavaScript standard inheritance library",
+  "main": "index.js",  
+  "keywords": [
+    "embryo",
+    "inheritance",
+    "class",
+    "instanceof",
+    "plugins",
+    "extend",
+    "new",
+    "inherit",
+    "inherits",
+    "operator",
+    "getters",
+    "setters",
+    "prototype",
+    "method",
+    "surcharged"
+  ],
+  "dependencies": {
+  },
+  "devDependencies": {
+    "mocha": "1.x",
+    "should": ""
+  },  
+  "license": "Free"
+}
