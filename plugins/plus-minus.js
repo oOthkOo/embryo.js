@@ -1,5 +1,7 @@
-var PlusMinus = Plugin.extend({
-    name: 'PlusMoins',
+var Embryo = require('../lib/embryo')
+
+var PlusMinus = Embryo.Plugin.extend({
+    name: 'PlusMinus',
     options: {
         plusPrefix: '+',
         moinsPrefix: '-'
@@ -29,3 +31,5 @@ var PlusMinus = Plugin.extend({
         }        
     }
 })
+
+module.exports = PlusMinus

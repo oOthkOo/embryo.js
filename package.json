@@ -12,7 +12,7 @@
   },  
   "homepage" : "https://github.com/oOthkOo/embryo.js",
   "description": "The most simple, customizable and easy to use JavaScript standard inheritance library",
-  "main": "index.js",  
+  "main": "lib/main",  
   "keywords": [
     "embryo",
     "inheritance",

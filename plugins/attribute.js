@@ -1,4 +1,6 @@
-var Attribute = Plugin.extend({
+var Embryo = require('../lib/embryo')
+
+var Attribute = Embryo.Plugin.extend({
     name: 'Attribute',
     options: {
         getPrefix: 'get',
@@ -44,3 +46,5 @@ var Attribute = Plugin.extend({
         return text
     }
 })
+
+module.exports = Attribute

@@ -1,4 +1,6 @@
-var Extend = Plugin.extend({
+var Embryo = require('../lib/embryo')
+
+var Extend = Embryo.Plugin.extend({
     name: 'Extend',
     options: {
         nameType: '_type',
@@ -46,3 +48,5 @@ var Extend = Plugin.extend({
         return o
     }
 })
+
+module.exports = Extend
