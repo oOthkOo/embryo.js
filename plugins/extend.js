@@ -13,18 +13,15 @@ var Extend = Embryo.Plugin.extend({
     },
     exec: function( o, debug, child ) {
 
+        if (this.isBlacklisted( o )) {
+            debug && console.log( '[' + this.name + '] - SKIPPED' )
+            return o
+        }
+
         debug && debug( this.name, 'BEFORE', o )
 
-        /*var c = o[const_cstr] || null
-        if (!c) {
-            throw Error( 'no constructor function found.')
-        }
-        if (typeof(c) !== 'function') {
-            throw Error( 'constructor function invalid.')
-        }*/
-
         if (this.options.forceTyping && !o[this.options.nameType]) {        
-            o[this.options.nameType] = 'xclassz'
+            o[this.options.nameType] = this.options.typeDefault
         }
 
         var p = o[this.options.nameProperties] || null

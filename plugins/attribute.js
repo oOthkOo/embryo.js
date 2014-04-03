@@ -12,15 +12,23 @@ var Attribute = Embryo.Plugin.extend({
     },
     exec: function( o, debug, child ) {
 
+        if (this.isBlacklisted( o )) {
+            debug && console.log( '[' + this.name + '] - SKIPPED' )
+            return o
+        }
+
         debug && debug( this.name, 'BEFORE', o )
 
         for (var n in o) {
             if (o.hasOwnProperty(n)) {
                 var value = o[n]
-                if (typeof(value) !== 'function') {
-                    var fname = this.options.getPrefix + this.camelize( n )
+                if (n != '_type' &&
+                    typeof(value) !== 'function') {
+                    var name = this.options.camelize ? this.camelize( n ) : n
+                    var fname = this.options.getPrefix + name
                     this.defineGetter( o, fname, n )
-                    fname = this.options.setPrefix + this.camelize( n )
+                    name = this.options.camelize ? this.camelize( n ) : n
+                    fname = this.options.setPrefix + name
                     this.defineSetter( o, fname, n )
                 }    
             }
