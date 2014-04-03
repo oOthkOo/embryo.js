@@ -10,7 +10,7 @@ Features
  * Support super constructor **automatic** call
  * Support extending a class **C** via **C.prototype**
  * Support **automatic** 'getters', 'setters' methods generation
- * Support **surcharged** methods (soon..)
+ * Support **surcharged** methods, call a specific method from arguments count
  * Support custom class definition **format** (configure all plugins)
  * Support customs **plugins** (create your own plugin or use defaults)
  * Support plugins **management** (whitelist, blacklist plugin from your class definition)
@@ -35,9 +35,9 @@ var Embryo = require('embryo')
 
 var Human = Embryo.extend({
 
-    '_type': 'Human',
+    '_type': 'Human',							// define class internal type
 
-    properties : {
+    properties : {								// define all class properties
         name: 'John',
         score: 1000,
         power: 2,
@@ -45,11 +45,23 @@ var Human = Embryo.extend({
             'super',
         ]
     },
-    init: function() {
+    init: function() {							// define class constructor
         this.lifes = 3
     },
     walk: function() {
         console.log('walk', this.power)
+    },
+    run: function() {							// define a simple method
+        console.log('0 arg')
+    },
+	'run|1': function( arg1 ) {					// define a surcharged method 
+        console.log('1 arg')					// when you call run( 'foo' )
+    },
+    'run|2': function( arg1, arg2 ) {			// define a surcharged method
+        console.log('2 args')					// when you call run( 'foo', 'bar' )
+    },
+    'run|3': function( arg1, arg2, arg3 ) {
+        console.log('3 args')
     }
 })
 
@@ -85,6 +97,12 @@ human.walk()								// -> walk: 2
 console.log( human.getScore() )				// -> 1000
 console.log( human.getName() )				// -> John
 console.log( human.getOptions() )			// -> ['super']
+
+human.run()									// -> call method run()
+human.run( '1' )							// -> call method human['run|1']()
+human.run( '1', '2' )						// -> call method human['run|2']()
+human.run( '1', '2', '3' )					// -> call method human['run|3']()
+human.run( '1', '2', '3', '4' )				// -> call default method run()
  
 var superman = new Superman()
 superman.walk()								// -> walk: 10
@@ -114,6 +132,7 @@ Embryo enables by default 3 plugins :
  * Extend : A plugin to add default properties values
  * Attribute : A plugin to generate "getters" and "setters" methods
  * BeforeAfter : A plugin to redefine/control super methods execution
+ * Surcharge : A plugin to allow you call specific method with multiple arguments
 
 <h4>Extend</h4>
 To configure Extend plugin :
@@ -139,9 +158,17 @@ Embryo.plugins['Attribute'].configure({
 To configure BeforeAfter plugin :
 ```javascript
 Embryo.plugins['BeforeAfter'].configure({
-	beforePrefix: '-',				// default before trigger prefix in method name (ex: -scrore)
-    afterPrefix: '+',				// default after trigger prefix in method name (ex: +scrore)
+	beforePrefix: '-',				// default before trigger prefix in method name (ex: -score)
+    afterPrefix: '+',				// default after trigger prefix in method name (ex: +score)
     hiddenPrefix: '_bah_'			// default prefix for hidden method (ex: score() -> call _bah_score())
+})
+```
+<h4>Surcharge</h4>
+To configure Surcharge plugin :
+```javascript
+Embryo.plugins['Surcharge'].configure({
+	suffix: '|',					// default trigger suffix in method name (ex: score|2)
+    hiddenPrefix: '_pm_'			// default prefix for hidden method (ex: score() -> call _pm_score())
 })
 ```
 Your plugin
