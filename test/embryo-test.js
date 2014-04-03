@@ -1,8 +1,33 @@
 var Embryo = require('../lib/main')
 
+var Dog = Embryo.extend({
+
+    '_type': 'Dog',
+
+    /*'_blacklist': [
+        '*'
+    ],*/
+
+    properties : {
+        name: 'Charly'
+    },
+
+    init: function() {
+        
+    },
+
+    'bark': function() {
+        console.log('Waouf Waouf')
+    }
+})
+
 var Human = Embryo.extend({
 
     '_type': 'Human',
+
+    /*'_blacklist': [
+        'Attribute'
+    ],*/
 
     properties : {
         name: 'John',
@@ -28,6 +53,22 @@ var Human = Embryo.extend({
 
     '+walk': function() {
         console.log('B')
+    },
+
+    run: function() {
+        console.log('0 arg')
+    },
+
+    'run|1': function( arg1 ) {
+        console.log('1 arg')
+    },
+
+    'run|2': function( arg1, arg2 ) {
+        console.log('2 args')
+    },
+
+    'run|3': function( arg1, arg2, arg3 ) {
+        console.log('3 args')
     }
 })
 
@@ -35,11 +76,9 @@ var Superman = Human.extend({
 
     '_type': 'Superman',
 
-    '_blacklist': [
-        'Attribute',
-        'BeforeAfter',
-        '*'
-    ],
+    /*'_blacklist': [
+        //'Attribute'
+    ],*/
 
     init: function() {
         
@@ -50,8 +89,17 @@ var Superman = Human.extend({
     }
 })
 
+var dog = new Dog()
+dog.bark()
+
 var human = new Human()
 human.walk()
+//human['run|1']()
+
+human.run()
+human.run( '1' )
+human.run( '1', '2' )
+human.run( '2', '2', '3' )
 
 var superman = new Superman()
 superman.walk()
