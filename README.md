@@ -149,26 +149,26 @@ Embryo.plugins['Extend'].configure({
 To configure Attribute plugin :
 ```javascript
 Embryo.plugins['Attribute'].configure({
-	getPrefix: 'get',				// default get prefix name
-    setPrefix: 'set',				// default set prefix name
-    camelize: true					// camelize generated methods names (getscore or getScore)
+	getPrefix: 'get',		// default get prefix name
+    setPrefix: 'set',		// default set prefix name
+    camelize: true			// camelize generated methods names (getscore or getScore)
 })
 ```
 <h4>BeforeAfter</h4>
 To configure BeforeAfter plugin :
 ```javascript
 Embryo.plugins['BeforeAfter'].configure({
-	beforePrefix: '-',				// default before trigger prefix in method name (ex: -score)
-    afterPrefix: '+',				// default after trigger prefix in method name (ex: +score)
-    hiddenPrefix: '_bah_'			// default prefix for hidden method (ex: score() -> call _bah_score())
+	beforePrefix: '-',		// default before trigger prefix in method name (ex: -score)
+    afterPrefix: '+',		// default after trigger prefix in method name (ex: +score)
+    hiddenPrefix: '_bah_'	// default prefix for hidden method (ex: score() -> call _bah_score())
 })
 ```
 <h4>Surcharge</h4>
 To configure Surcharge plugin :
 ```javascript
 Embryo.plugins['Surcharge'].configure({
-	suffix: '|',					// default trigger suffix in method name (ex: score|2)
-    hiddenPrefix: '_pm_'			// default prefix for hidden method (ex: score() -> call _pm_score())
+	suffix: '|',			// default trigger suffix in method name (ex: score|2)
+    hiddenPrefix: '_pm_'	// default prefix for hidden method (ex: score() -> call _pm_score())
 })
 ```
 Your plugin
