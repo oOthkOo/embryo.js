@@ -56,3 +56,12 @@ human.walk()
 var superman = new Superman()
 superman.walk()
 superman.fly()
+
+var plugin = Embryo.plugins['Extend']
+console.log(plugin.getName(), plugin)
+
+Embryo.plugins['BeforeAfter'].configure({
+    beforePrefix: '-',
+    afterPrefix: '+',
+    hiddenPrefix: '_bah_'
+})
