@@ -1,4 +1,5 @@
 # Embryo.js
+[![NPM](https://nodei.co/npm/embryo.png?downloads=true)](https://nodei.co/npm/embryo/)
 
 The most simple, customizable and easy to use JavaScript standard inheritance library.
 
