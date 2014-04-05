@@ -5,7 +5,34 @@
 		<meta http-equiv="content-type" content="text/html; charset=UTF-8">
 	</head>
 	<body>
-		<script src="../dist/embryo-0.0.5.min.js" type="text/javascript"></script>
+		<script src="../dist/embryo-0.0.5.js" type="text/javascript"></script>
 		<script src="./embryo-browser-test.js" type="text/javascript"></script>
+		<script type="text/javascript">
+
+			var SuperHero = Superman.extend({
+
+			    '_type': 'SuperHero',
+
+			    '_blacklist': [
+			        //'Attribute'
+			    ],
+
+			    init: function() {
+			        
+			    },
+
+			    'tornade': function() {
+			        console.log('T')
+			    },
+
+			    '+tornade': function() {
+			        console.log('T2')
+			    }
+			})
+
+			var hero = new SuperHero()
+			hero.tornade()
+			
+		</script>
 	</body>
 </html>

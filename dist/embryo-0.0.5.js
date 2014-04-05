@@ -9,12 +9,14 @@
         JavaScript standard inheritance library
 **/
 
-var options = {
+var embryo_options = {
     cstrName: 'init',
     forceCstr: true,
     nameBlacklist: '_blacklist',
     deleteBlacklist: true
 }
+
+var embryo_plugins = []
 
 var debugPlugin = function( name, step, o ) {
     console.log( '[' + name + '] - ' + step )
@@ -42,17 +44,16 @@ var debugPlugin = function( name, step, o ) {
 }
 
 var Embryo = function() {
-    this[options.cstrName] && this[options.cstrName].apply(this, arguments)
+    this[embryo_options.cstrName] && this[embryo_options.cstrName].apply(this, arguments)
 }
-
-Embryo.plugins = []
 
 Embryo.extend = function( o ) {
 
+    //console.log(o._type + ' - start')
     //var timeStart = new Date().getTime()
 
-    var c = o[options.cstrName] || null
-    if (options.forceCstr && !c) {
+    var c = o[embryo_options.cstrName] || null
+    if (embryo_options.forceCstr && !c) {
         if (!c) {
             throw Error( 'No constructor function found.')
         }
@@ -66,10 +67,12 @@ Embryo.extend = function( o ) {
         return parent.apply(this, arguments)
     }    
     child.extend = parent.extend
-    
-    var Surrogate = function() {} 
-    Surrogate.prototype = parent.prototype
+
+    var Surrogate = function() {}
+    Surrogate.prototype = this.prototype
     child.prototype = new Surrogate
+
+    //console.log('parent', parent)
 
     /*/ Prepare class properties for all plugins
     var r = []
@@ -84,18 +87,16 @@ Embryo.extend = function( o ) {
     }
     console.log('r', r)*/
 
-    for (var n in this.plugins) {
-        if (this.plugins.hasOwnProperty(n)) {
-            var plugin = this.plugins[n]
-            //console.log('plugin', plugin.name)
-            var debug = plugin.isDebug() ? debugPlugin : null
-            o = plugin.exec( o, debug, child )
-        }
+    for (var p=0; p<embryo_plugins.length; p++) {
+        var plugin = embryo_plugins[p]
+        //console.log('plugin ' + plugin.name + ' -> ' + o._type)
+        var debug = plugin.isDebug() ? debugPlugin : null
+        o = plugin.exec( o, debug, child )
     }
 
     for (var key in o) {
-        if (key == options.nameBlacklist &&
-            options.deleteBlacklist) {
+        if (key == embryo_options.nameBlacklist &&
+            embryo_options.deleteBlacklist) {
             continue
         }
         child.prototype[key] = o[key]
@@ -103,6 +104,7 @@ Embryo.extend = function( o ) {
 
     //var timeEnd = new Date().getTime()
     //console.log('time: ' + (timeEnd - timeStart) + 'ms')
+    //console.log(o._type + ' - end')
 
     return child 
 }
@@ -110,23 +112,31 @@ Embryo.extend = function( o ) {
 Embryo.configure = function ( o ) {
     for (var n in o) {
         if (o.hasOwnProperty(n)) {
-            options[n] = o[n]
+            embryo_options[n] = o[n]
         }
     }
 }
 
+Embryo.plugins = function( name ) {
+    for (var p=0; p<embryo_plugins.length; p++) {
+        var plugin = embryo_plugins[p]
+        if (plugin.name == name) {
+            return plugin
+        }
+    }
+    return null
+}
+
 Embryo.use = function ( plugin, debug ) {
-    plugin.configure( options )
+    plugin.configure( embryo_options )
     plugin.setDebug( debug )
-    Embryo.plugins[plugin.name] = plugin
+    embryo_plugins.push(plugin)
 }    
 
 Embryo.configure()
 
 Embryo.Plugin = Embryo.extend({
-
     '_type': 'Plugin',
-
     name: 'Plugin',
     options: null,
     
@@ -173,6 +183,7 @@ Embryo.Plugin = Embryo.extend({
 })
 
 var Attribute = Embryo.Plugin.extend({
+    '_type': 'Attribute',
     name: 'Attribute',
     options: {
         getPrefix: 'get',
@@ -228,6 +239,7 @@ var Attribute = Embryo.Plugin.extend({
 })
 
 var BeforeAfter = Embryo.Plugin.extend({
+    '_type': 'BeforeAfter',
     name: 'BeforeAfter',
     options: {
         beforePrefix: '-',
@@ -325,6 +337,7 @@ var BeforeAfter = Embryo.Plugin.extend({
 })
 
 var Extend = Embryo.Plugin.extend({
+    '_type': 'Extend',
     name: 'Extend',
     options: {
         nameType: '_type',
@@ -371,6 +384,7 @@ var Extend = Embryo.Plugin.extend({
 })
 
 var Surcharge = Embryo.Plugin.extend({
+    '_type': 'Surcharge',
     name: 'Surcharge',
     options: {
         suffix: '|',
@@ -451,6 +465,57 @@ var Surcharge = Embryo.Plugin.extend({
     }
 })
 
+var Memory = Embryo.Plugin.extend({
+    name: 'Memory',
+    options: {
+        nameInstanceArray: 'instances',
+        nameNewMethod: 'new',
+        nameStatsMethod: 'stats',
+        nameDestroyMethod: 'destroy'
+    },
+    methods: [],
+    init: function() {
+        
+    },
+    exec: function( o, debug, child ) {
+
+        if (this.isBlacklisted( o )) {
+            debug && console.log( '[' + this.name + '] - SKIPPED' )
+            return o
+        }
+
+        debug && debug( this.name, 'BEFORE', o )
+
+        o[this.options.nameInstanceArray] = []
+        o[this.options.nameNewMethod] = function( oclass, args ) {
+            var instance = args ? new oclass( args ) : new oclass()
+            this.instances.push( instance )
+            return instance
+        }
+        o[this.options.nameStatsMethod] = function() {
+            /*for (var i=0; i<this.instances.length; i++) {
+                //console.log('instance ' + i, this.instances[i])
+            }*/
+        }
+        o[this.options.nameDestroyMethod] = function() {
+            for (var i=0; i<this.instances.length; i++) {
+                /*var instance = this.instances[i]
+                var fdestroy = instance.destroy || null
+                if (fdestroy) {
+                    fdestroy()
+                }*/
+                delete this.instances[i]
+            }
+            this.instances = []
+            //console.log('destroy')
+        }
+
+        debug && debug( this.name, 'AFTER', o )
+
+        return o
+    }
+})
+
 var extendPlugin = new Extend()
 extendPlugin.configure({
     nameType: '_type',
@@ -480,6 +545,14 @@ surchargePlugin.configure({
     hiddenPrefix: '_pm_'
 })
 
+var memoryPlugin = new Memory()
+memoryPlugin.configure({
+    nameInstanceArray: 'instances',
+    nameNewMethod: 'new',
+    nameStatsMethod: 'stats',
+    nameDestroyMethod: 'destroy'
+})
+
 // Configure Embryo ;-)
 Embryo.configure({
     cstrName: 'init',
@@ -491,3 +564,4 @@ Embryo.use( extendPlugin, false )
 Embryo.use( attributePlugin, false )
 Embryo.use( beforeAfterPlugin, false )
 Embryo.use( surchargePlugin, false )
+Embryo.use( memoryPlugin, false )

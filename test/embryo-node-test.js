@@ -76,18 +76,28 @@ var Superman = Human.extend({
 
     '_type': 'Superman',
 
-    /*'_blacklist': [
-        //'Attribute'
-    ],*/
+    '_blacklist': [
+        'Attribute'
+    ],
 
     init: function() {
-        
+        console.log('Superman')
     },
 
     fly: function() {
         console.log('F')
+    },
+
+    'tornade': function() {
+        console.log('T')
+    },
+
+    '+tornade': function() {
+        console.log('T2')
     }
 })
+
+//console.log('[extend]:', Human.extend)
 
 var dog = new Dog()
 dog.bark()
@@ -104,12 +114,20 @@ human.run( '2', '2', '3' )
 var superman = new Superman()
 superman.walk()
 superman.fly()
+superman.tornade()
 
-var plugin = Embryo.plugins['Extend']
-console.log(plugin.getName(), plugin)
+var plugin = Embryo.plugins('BeforeAfter')
+if (plugin) {
+    //console.log(plugin.getName(), plugin)
+    plugin.configure({
+        beforePrefix: '-',
+        afterPrefix: '+',
+        hiddenPrefix: '_bah_'
+    })
+}
 
-Embryo.plugins['BeforeAfter'].configure({
-    beforePrefix: '-',
-    afterPrefix: '+',
-    hiddenPrefix: '_bah_'
-})
+var dog2 = superman.new( Dog )
+dog2.bark()
+
+superman.stats()
+superman.destroy()

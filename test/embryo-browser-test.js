@@ -103,11 +103,18 @@ var superman = new Superman()
 superman.walk()
 superman.fly()
 
-var plugin = Embryo.plugins['Extend']
-console.log(plugin.getName(), plugin)
+var plugin = Embryo.plugins('BeforeAfter')
+if (plugin) {
+    console.log(plugin.getName(), plugin)
+    plugin.configure({
+        beforePrefix: '-',
+        afterPrefix: '+',
+        hiddenPrefix: '_bah_'
+    })
+}
 
-Embryo.plugins['BeforeAfter'].configure({
-    beforePrefix: '-',
-    afterPrefix: '+',
-    hiddenPrefix: '_bah_'
-})
+var dog2 = superman.new( Dog )
+dog2.bark()
+
+superman.stats()
+superman.destroy()
