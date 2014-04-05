@@ -135,7 +135,7 @@ Embryo.configure({
 ```
 Plugins
 -----
-Embryo enables by default 3 plugins :
+Embryo enables by default 4 plugins :
  * Extend : A plugin to add default properties values
  * Attribute : A plugin to generate "getters" and "setters" methods
  * BeforeAfter : A plugin to redefine/control super methods execution
