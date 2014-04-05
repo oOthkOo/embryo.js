@@ -144,7 +144,7 @@ Embryo enables by default 4 plugins :
 <h4>Extend</h4>
 To configure Extend plugin :
 ```javascript
-Embryo.plugins['Extend'].configure({
+Embryo.plugins('Extend').configure({
     nameType: '_type',				// default class type property name
     typeDefault: 'Embryo',			// default class type value
     forceTyping: true,				// add a default class type if not exists
@@ -155,7 +155,7 @@ Embryo.plugins['Extend'].configure({
 <h4>Attribute</h4>
 To configure Attribute plugin :
 ```javascript
-Embryo.plugins['Attribute'].configure({
+Embryo.plugins('Attribute').configure({
 	getPrefix: 'get',		// default get prefix name
     setPrefix: 'set',		// default set prefix name
     camelize: true			// camelize generated methods names (getscore or getScore)
@@ -164,7 +164,7 @@ Embryo.plugins['Attribute'].configure({
 <h4>BeforeAfter</h4>
 To configure BeforeAfter plugin :
 ```javascript
-Embryo.plugins['BeforeAfter'].configure({
+Embryo.plugins('BeforeAfter').configure({
 	beforePrefix: '-',		// default before trigger prefix in method name (ex: -score)
     afterPrefix: '+',		// default after trigger prefix in method name (ex: +score)
     hiddenPrefix: '_bah_'	// default prefix for hidden method (ex: score() -> call _bah_score())
@@ -173,7 +173,7 @@ Embryo.plugins['BeforeAfter'].configure({
 <h4>Surcharge</h4>
 To configure Surcharge plugin :
 ```javascript
-Embryo.plugins['Surcharge'].configure({
+Embryo.plugins('Surcharge').configure({
 	suffix: '|',			// default trigger suffix in method name (ex: score|2)
     hiddenPrefix: '_pm_'	// default prefix for hidden method (ex: score() -> call _pm_score())
 })
@@ -228,7 +228,7 @@ var myPlugin = new MyPlugin()
 // use( plugin, debug )
 Embryo.use( myPlugin, false )
 // Now, you will able to reconfigure your plugin later...
-Embryo.plugins['MyPlugin'].configure({
+Embryo.plugins('MyPlugin').configure({
 	option1: 'value1',					// your plugin's options...
     option2: 'value2',
     option3: 'value3' 
