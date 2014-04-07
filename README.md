@@ -94,10 +94,10 @@ var Superman = Human.extend({
     init: function() {
         this.lifes = 10
     },
-    '-walk': function() {				// called before 'walk' called
+    '-walk': function() {				// called before 'walk' call
         console.log('before walk')	
     },
-    '+walk': function() {				// called after 'walk' called
+    '+walk': function() {				// called after 'walk' call
         console.log('after walk')
     },
     fly: function() {
