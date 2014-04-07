@@ -94,6 +94,12 @@ var Superman = Human.extend({
     init: function() {
         this.lifes = 10
     },
+    '-walk': function() {				// called before 'walk' called
+        console.log('before walk')	
+    },
+    '+walk': function() {				// called after 'walk' called
+        console.log('after walk')
+    },
     fly: function() {
         console.log('fly', this.power)
     }
@@ -112,7 +118,9 @@ human.run( '1', '2', '3' )					// -> call method human['run|3']()
 human.run( '1', '2', '3', '4' )				// -> call default method run()
  
 var superman = new Superman()
-superman.walk()								// -> walk: 10
+superman.walk()								// -> before walk
+											// -> walk: 10
+											// -> after walk
 superman.fly()								// -> fly: 10
 superman.getFly()							// Error, Attribute plugin blacklisted,
 											// there is no generated method with name 'getFly'
