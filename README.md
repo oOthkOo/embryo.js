@@ -33,7 +33,7 @@ To install node embryo module from npm repository :
 <h4>Browser</h4>
 To use Embryo in browser, just insert this tag in your html :
 ```html
-<script src="dist/embryo-0.0.6.min.js" type="text/javascript"></script>
+<script src="dist/embryo-0.0.7.min.js" type="text/javascript"></script>
 ```
 Usage
 -----
@@ -136,7 +136,11 @@ To configure Embryo :
 ```javascript
 Embryo.configure({
     cstrName: 'init',				// default class constructor name
+    cstrArrayName: '_types',        // default constructors array name
     forceCstr: true,				// class constructor required ?
+    nameType: '_type',              // default class type property name
+    typeDefault: 'Embryo',          // default class type value
+    forceTyping: true,              // add a default class type if not exists
     nameBlacklist: '_blacklist',	// array key witch contains disabled plugins names	
     deleteBlacklist: true			// delete blacklist array before class instanciation ?
 })
@@ -153,9 +157,6 @@ Embryo enables by default 4 plugins :
 To configure Extend plugin :
 ```javascript
 Embryo.plugins('Extend').configure({
-    nameType: '_type',				// default class type property name
-    typeDefault: 'Embryo',			// default class type value
-    forceTyping: true,				// add a default class type if not exists
     nameProperties: 'properties',	// default property object name
     deleteProperties: true			// delete properties object before class instanciation ?
 })

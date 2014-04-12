@@ -3,10 +3,8 @@ var Embryo = require('../lib/embryo')
 var Extend = Embryo.Plugin.extend({
     name: 'Extend',
     options: {
-        nameType: '_type',
         nameProperties: 'properties',
-        deleteProperties: true,
-        forceTyping: true
+        deleteProperties: true
     },
     init: function() {
         
@@ -19,10 +17,6 @@ var Extend = Embryo.Plugin.extend({
         }
 
         debug && debug( this.name, 'BEFORE', o )
-
-        if (this.options.forceTyping && !o[this.options.nameType]) {        
-            o[this.options.nameType] = this.options.typeDefault
-        }
 
         var p = o[this.options.nameProperties] || null
         if (p) {

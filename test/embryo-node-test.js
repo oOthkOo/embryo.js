@@ -13,7 +13,7 @@ var Dog = Embryo.extend({
     },
 
     init: function() {
-        
+        console.log('Dog')
     },
 
     'bark': function() {
@@ -40,7 +40,7 @@ var Human = Embryo.extend({
     },
 
     init: function() {
-        
+        console.log('Human')
     },
 
     'walk': function() {
@@ -97,6 +97,23 @@ var Superman = Human.extend({
     }
 })
 
+var God = Superman.extend({
+
+    '_type': 'God',
+
+    '_blacklist': [
+        'Attribute'
+    ],
+
+    init: function() {
+        console.log('God')
+    },
+
+    judge: function() {
+        console.log('J')
+    }
+})
+
 //console.log('[extend]:', Human.extend)
 
 var dog = new Dog()
@@ -115,6 +132,12 @@ var superman = new Superman()
 superman.walk()
 superman.fly()
 superman.tornade()
+
+var god = new God()
+god.walk()
+god.fly()
+god.tornade()
+god.judge()
 
 var plugin = Embryo.plugins('BeforeAfter')
 if (plugin) {
