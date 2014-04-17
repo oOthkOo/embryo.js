@@ -73,7 +73,7 @@ var Surcharge = Embryo.Plugin.extend({
                     throw new Error( 'method "' + fname + '" not defined.' )
                 }
             }
-            this[fname]()
+            this[fname].apply(this, arguments)
         }        
     }
 })

@@ -1,5 +1,5 @@
 /**
-    Embryo version 0.0.8
+    Embryo version 0.0.9
     Author:
         Tierry Danquin
     Github:
@@ -266,7 +266,6 @@ var Attribute = Embryo.Plugin.extend({
 })
 
 var BeforeAfter = Embryo.Plugin.extend({
-    '_type': 'BeforeAfter',
     name: 'BeforeAfter',
     options: {
         beforePrefix: '-',
@@ -343,21 +342,21 @@ var BeforeAfter = Embryo.Plugin.extend({
         o[method] = o[name]
         if (before && after) {
             o[name] = function () {
-                this[beforeMethod]()
-                this[method]()
-                this[afterMethod]()
+                this[beforeMethod].apply(this, arguments)
+                this[method].apply(this, arguments)
+                this[afterMethod].apply(this, arguments)
             }
         }
         else if (before) {
             o[name] = function () {
-                this[beforeMethod]()
-                this[method]()
+                this[beforeMethod].apply(this, arguments)
+                this[method].apply(this, arguments)
             }
         }
         else {
             o[name] = function () {
-                this[method]()
-                this[afterMethod]()
+                this[method].apply(this, arguments)
+                this[afterMethod].apply(this, arguments)
             }
         }        
     }

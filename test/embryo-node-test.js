@@ -37,16 +37,19 @@ var Human = Embryo.extend({
             'unlimited'
         ]
     },
-    init: function() {
-        console.log('Human')
+    init: function( o ) {
+        console.log('Human', o)
     },
-    'walk': function() {
+    'walk': function( pitch ) {
+        console.log('pitch', pitch)
         console.log('walk', this.name)
     },
-    '-walk': function() {
+    '-walk': function( pitch ) {
+        console.log('pitch', pitch)
         console.log('-walk', this.name)
     },
-    '+walk': function() {
+    '+walk': function( pitch ) {
+        console.log('pitch', pitch)
         console.log('+walk', this.name)
     },
     run: function() {
@@ -110,8 +113,11 @@ var God = Superman.extend({
 var dog = new Dog()
 dog.bark()
 
-var human = new Human()
-human.walk()
+var human = new Human({
+    a: 1,
+    b: 2
+})
+human.walk( 1 )
 //human['run|1']()
 
 human.run()
@@ -120,12 +126,12 @@ human.run( '1', '2' )
 human.run( '2', '2', '3' )
 
 var superman = new Superman()
-superman.walk()
+superman.walk( 2 )
 superman.fly()
 superman.tornade()
 
 var god = new God()
-god.walk()
+god.walk( 3 )
 god.fly()
 god.tornade()
 god.judge()
