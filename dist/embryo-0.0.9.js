@@ -79,6 +79,8 @@ var Embryo = function() {
     //console.log('--------')
 }
 
+Embryo.version = '0.0.9'
+
 Embryo.extend = function( o ) {
 
     //console.log(o._type + ' - start')
@@ -476,7 +478,7 @@ var Surcharge = Embryo.Plugin.extend({
                     throw new Error( 'method "' + fname + '" not defined.' )
                 }
             }
-            this[fname]()
+            this[fname].apply(this, arguments)
         }        
     }
 })
