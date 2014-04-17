@@ -67,16 +67,13 @@ var Surcharge = Embryo.Plugin.extend({
         o[name] = function () {
             var fname = name + suffix + arguments.length
             //console.log('fname', fname)
-            var fn = this[fname]
-            if (!fn) {
+            if (!this[fname]) {
                 fname = hiddenPrefix + name
-                //console.log('fname', fname)
-                fn = this[fname]
+                if (!this[fname]) {
+                    throw new Error( 'method "' + fname + '" not defined.' )
+                }
             }
-            if (!fn) {
-                throw new Error( 'method "' + name + '" not defined.' )
-            }
-            fn()
+            this[fname]()
         }        
     }
 })

@@ -1,5 +1,7 @@
 var Embryo = require('../lib/main')
 
+console.log( 'version', Embryo.version )
+
 var Dog = Embryo.extend({
 
     '_type': 'Dog',
@@ -22,13 +24,10 @@ var Dog = Embryo.extend({
 })
 
 var Human = Embryo.extend({
-
     '_type': 'Human',
-
     /*'_blacklist': [
         'Attribute'
     ],*/
-
     properties : {
         name: 'John',
         score: 1000,        
@@ -38,37 +37,29 @@ var Human = Embryo.extend({
             'unlimited'
         ]
     },
-
     init: function() {
         console.log('Human')
     },
-
     'walk': function() {
-        console.log('W')
+        console.log('walk', this.name)
     },
-
     '-walk': function() {
-        console.log('A')
+        console.log('-walk', this.name)
     },
-
     '+walk': function() {
-        console.log('B')
+        console.log('+walk', this.name)
     },
-
     run: function() {
-        console.log('0 arg')
+        console.log('run(0)', this.name)
     },
-
     'run|1': function( arg1 ) {
-        console.log('1 arg')
+        console.log('run(1)', this.name)
     },
-
     'run|2': function( arg1, arg2 ) {
-        console.log('2 args')
+        console.log('run(2)', this.name)
     },
-
     'run|3': function( arg1, arg2, arg3 ) {
-        console.log('3 args')
+        console.log('run(3)', this.name)
     }
 })
 
@@ -138,6 +129,8 @@ god.walk()
 god.fly()
 god.tornade()
 god.judge()
+
+console.log('types', god._types)
 
 var plugin = Embryo.plugins('BeforeAfter')
 if (plugin) {

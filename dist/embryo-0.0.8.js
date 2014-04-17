@@ -1,5 +1,5 @@
 /**
-    Embryo version 0.0.7
+    Embryo version 0.0.8
     Author:
         Tierry Danquin
     Github:
@@ -405,7 +405,6 @@ var Extend = Embryo.Plugin.extend({
 })
 
 var Surcharge = Embryo.Plugin.extend({
-    '_type': 'Surcharge',
     name: 'Surcharge',
     options: {
         suffix: '|',
@@ -472,16 +471,13 @@ var Surcharge = Embryo.Plugin.extend({
         o[name] = function () {
             var fname = name + suffix + arguments.length
             //console.log('fname', fname)
-            var fn = this[fname]
-            if (!fn) {
+            if (!this[fname]) {
                 fname = hiddenPrefix + name
-                //console.log('fname', fname)
-                fn = this[fname]
+                if (!this[fname]) {
+                    throw new Error( 'method "' + fname + '" not defined.' )
+                }
             }
-            if (!fn) {
-                throw new Error( 'method "' + name + '" not defined.' )
-            }
-            fn()
+            this[fname]()
         }        
     }
 })
