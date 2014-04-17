@@ -33,7 +33,7 @@ To install node embryo module from npm repository :
 <h4>Browser</h4>
 To use Embryo in browser, just insert this tag in your html :
 ```html
-<script src="dist/embryo-0.0.7.min.js" type="text/javascript"></script>
+<script src="dist/embryo-0.0.9.min.js" type="text/javascript"></script>
 ```
 Usage
 -----
