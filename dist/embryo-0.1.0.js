@@ -1,5 +1,5 @@
 /**
-    Embryo version 0.0.9
+    Embryo version 0.1.0
     Author:
         Tierry Danquin
     Github:
@@ -21,6 +21,7 @@ var embryo_options = {
 }
 
 var embryo_plugins = []
+var embryo_types = []
 
 var debugPlugin = function( name, step, o ) {
     console.log( '[' + name + '] - ' + step )
@@ -59,32 +60,21 @@ var isTypeExist = function ( types, name ) {
 
 var Embryo = function() {
 
-    /*console.log('--------')
-    console.log('type', this[embryo_options.nameType])
-    console.log('types', this[embryo_options.cstrArrayName])*/
-
-    var types = this[embryo_options.cstrArrayName] || []
+    var types = embryo_types
     for (var i=0; i<types.length; i++) {
         var name = types[i].name
         var init = types[i].init
-        //console.log('launch', name)
-        if (init) {
+        var inherit = this instanceof types[i].child
+        if (init && inherit) {
+            //console.log('launch', name)
             init.apply(this, arguments)
         }
-        if (name == this[embryo_options.nameType]) {
-            break
-        }
     }
-
-    //console.log('--------')
 }
 
-Embryo.version = '0.0.9'
+Embryo.version = '0.1.0'
 
 Embryo.extend = function( o ) {
-
-    //console.log(o._type + ' - start')
-    //var timeStart = new Date().getTime()
 
     var c = o[embryo_options.cstrName] || null
     if (embryo_options.forceCstr && !c) {
@@ -95,7 +85,7 @@ Embryo.extend = function( o ) {
     if (c && typeof(c) !== 'function') {
         throw Error( 'Constructor function invalid.')
     }
-    
+
     var parent = this    
     var child = function() {
         return parent.apply(this, arguments)
@@ -118,28 +108,22 @@ Embryo.extend = function( o ) {
         o = plugin.exec( o, debug, child )
     }
 
-    child.prototype[embryo_options.cstrArrayName] = child.prototype[embryo_options.cstrArrayName] || []
-
     for (var key in o) {
         if (key == embryo_options.nameBlacklist &&
             embryo_options.deleteBlacklist) {
             continue
         }
         if (key == embryo_options.cstrName) {
-            var types = child.prototype[embryo_options.cstrArrayName]
-            if (!isTypeExist( types, type )) {
-                types.push({
+            if (!isTypeExist( embryo_types, type )) {
+                embryo_types.push({
                     name: type,
-                    init: o[key] || null
+                    init: o[key] || null,
+                    child: child
                 })
             }
         }
         child.prototype[key] = o[key]
     }
-
-    //console.log(o._type + ' - end')
-    //var timeEnd = new Date().getTime()
-    //console.log('time: ' + (timeEnd - timeStart) + 'ms') 
 
     return child 
 }
