@@ -1,5 +1,5 @@
 /**
-    Embryo version 0.1.0
+    Embryo version 0.1.1
     Author:
         Tierry Danquin
     Github:
@@ -16,6 +16,7 @@ var embryo_options = {
     nameType: '_type',
     forceTyping: true,
     typeDefault: 'Embryo',
+    nameProperties: 'properties',
     nameBlacklist: '_blacklist',
     deleteBlacklist: true
 }
@@ -60,19 +61,47 @@ var isTypeExist = function ( types, name ) {
 
 var Embryo = function() {
 
-    var types = embryo_types
+    //console.log('---START---')
+
+    // Select all matched types
+    var types = []
+    for (var i=0; i<embryo_types.length; i++) {
+        var type = embryo_types[i]
+        if (this instanceof type.child) {
+            types.push(type)
+        }
+    }
+
+    // Extend types properties from last to first
+    for (var i=types.length-1; i>-1; i--) {
+        var type = types[i]
+        var props = type.props
+        if (props) {
+            for (var n in props) {
+                if (props.hasOwnProperty(n)) {
+                    if (typeof this[n] == 'undefined') {
+                        this[n] = props[n]
+                        //console.log('['+n+']=['+props[n]+']')    
+                    }
+                }
+            }
+        }
+    }
+
+    // Call each types constructors
     for (var i=0; i<types.length; i++) {
-        var name = types[i].name
-        var init = types[i].init
-        var inherit = this instanceof types[i].child
-        if (init && inherit) {
-            //console.log('launch', name)
+        var type = types[i]
+        //var name = type.name
+        var init = type.init
+        if (init) {
             init.apply(this, arguments)
         }
     }
+
+    //console.log('---END---')
 }
 
-Embryo.version = '0.1.0'
+Embryo.version = '0.1.1'
 
 Embryo.extend = function( o ) {
 
@@ -113,11 +142,15 @@ Embryo.extend = function( o ) {
             embryo_options.deleteBlacklist) {
             continue
         }
+        if (key == embryo_options.nameProperties) {
+            continue
+        }
         if (key == embryo_options.cstrName) {
             if (!isTypeExist( embryo_types, type )) {
                 embryo_types.push({
                     name: type,
                     init: o[key] || null,
+                    props: o[embryo_options.nameProperties],
                     child: child
                 })
             }
@@ -169,7 +202,7 @@ Embryo.Plugin = Embryo.extend({
         }
     },
     isBlacklisted: function( o ) {
-        var pl = o['_blacklist']
+        var pl = o['_blacklist'] || false
         if (!pl) {
             return false
         }
@@ -215,11 +248,12 @@ var Attribute = Embryo.Plugin.extend({
 
         debug && debug( this.name, 'BEFORE', o )
 
-        for (var n in o) {
-            if (o.hasOwnProperty(n)) {
-                var value = o[n]
-                if (n != '_type' &&
-                    typeof(value) !== 'function') {
+        var props = o[this.options.nameProperties] || {}
+
+        for (var n in props) {
+            if (props.hasOwnProperty(n)) {
+                var value = props[n]
+                if (typeof(value) !== 'function') {
                     var name = this.options.camelize ? this.camelize( n ) : n
                     var fname = this.options.getPrefix + name
                     this.defineGetter( o, fname, n )
@@ -228,7 +262,7 @@ var Attribute = Embryo.Plugin.extend({
                     this.defineSetter( o, fname, n )
                 }    
             }
-        }                
+        }               
 
         debug && debug( this.name, 'AFTER', o )
 
@@ -345,47 +379,6 @@ var BeforeAfter = Embryo.Plugin.extend({
                 this[afterMethod].apply(this, arguments)
             }
         }        
-    }
-})
-
-var Extend = Embryo.Plugin.extend({
-    '_type': 'Extend',
-    name: 'Extend',
-    options: {
-        nameProperties: 'properties',
-        deleteProperties: true
-    },
-    init: function() {
-        
-    },
-    exec: function( o, debug, child ) {
-
-        if (this.isBlacklisted( o )) {
-            debug && console.log( '[' + this.name + '] - SKIPPED' )
-            return o
-        }
-
-        debug && debug( this.name, 'BEFORE', o )
-
-        var p = o[this.options.nameProperties] || null
-        if (p) {
-            if (typeof(p) !== 'object') {
-                throw Error( 'properties object invalid.')
-            }
-            for (var n in p) {
-                if (p.hasOwnProperty(n)) {
-                    o[n] = p[n]     
-                }
-            }
-        }
-
-        if (this.options.deleteProperties) {
-            delete o[this.options.nameProperties]
-        }        
-
-        debug && debug( this.name, 'AFTER', o )
-
-        return o
     }
 })
 
@@ -518,12 +511,6 @@ var Memory = Embryo.Plugin.extend({
     }
 })
 
-var extendPlugin = new Extend()
-extendPlugin.configure({
-    nameProperties: 'properties',
-    deleteProperties: true
-})
-
 var attributePlugin = new Attribute()
 attributePlugin.configure({
     getPrefix: 'get',
@@ -560,10 +547,10 @@ Embryo.configure({
     nameType: '_type',
     forceTyping: true,
     typeDefault: 'Embryo',
+    nameProperties: 'properties',
     nameBlacklist: '_blacklist',
     deleteBlacklist: true
 })
-Embryo.use( extendPlugin, false )
 Embryo.use( attributePlugin, false )
 Embryo.use( beforeAfterPlugin, false )
 Embryo.use( surchargePlugin, false )

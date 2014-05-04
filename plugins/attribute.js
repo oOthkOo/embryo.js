@@ -19,11 +19,12 @@ var Attribute = Embryo.Plugin.extend({
 
         debug && debug( this.name, 'BEFORE', o )
 
-        for (var n in o) {
-            if (o.hasOwnProperty(n)) {
-                var value = o[n]
-                if (n != '_type' &&
-                    typeof(value) !== 'function') {
+        var props = o[this.options.nameProperties] || {}
+
+        for (var n in props) {
+            if (props.hasOwnProperty(n)) {
+                var value = props[n]
+                if (typeof(value) !== 'function') {
                     var name = this.options.camelize ? this.camelize( n ) : n
                     var fname = this.options.getPrefix + name
                     this.defineGetter( o, fname, n )
