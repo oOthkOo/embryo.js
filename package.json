@@ -36,8 +36,5 @@
     "mocha": "1.18.2",
     "chai": "1.9.1"
   },
-  "scripts": {
-    "test": "mocha -R spec"
-  },
   "license": "Free"
 }
