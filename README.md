@@ -48,9 +48,9 @@ var Embryo = require('embryo')
 
 var Human = Embryo.extend({
 
-    '_type': 'Human',							// define class internal type
+    '_type': 'Human',				// define class internal type
 
-    properties : {								// define all class properties
+    properties : {				// define all class properties
         name: 'John',
         score: 1000,
         power: 2,
@@ -58,20 +58,20 @@ var Human = Embryo.extend({
             'super',
         ]
     },
-    init: function() {							// define class constructor
+    init: function() {				// define class constructor
         this.lifes = 3
     },
     walk: function() {
         console.log('walk', this.power)
     },
-    run: function() {							// define a simple method
+    run: function() {				// define a simple method
         console.log('0 arg')
     },
-	'run|1': function( arg1 ) {					// define a surcharged method 
-        console.log('1 arg')					// when you call run( 'foo' )
+	'run|1': function( arg1 ) {		// define a surcharged method 
+        console.log('1 arg')			// when you call run( 'foo' )
     },
-    'run|2': function( arg1, arg2 ) {			// define a surcharged method
-        console.log('2 args')					// when you call run( 'foo', 'bar' )
+    'run|2': function( arg1, arg2 ) {		// define a surcharged method
+        console.log('2 args')			// when you call run( 'foo', 'bar' )
     },
     'run|3': function( arg1, arg2, arg3 ) {
         console.log('3 args')
@@ -83,8 +83,8 @@ var Superman = Human.extend({
     '_type': 'Superman',
     
     '_blacklist': [
-    	'Attribute',	// Attribute plugin blacklisted for this class
-    	'*'				// All plugins are blacklisted for this class
+    	'Attribute',				// Attribute plugin blacklisted for this class
+    	'*'					// All plugins are blacklisted for this class
     ],
 
     properties : {
@@ -100,10 +100,10 @@ var Superman = Human.extend({
     init: function() {
         this.lifes = 10
     },
-    '-walk': function() {				// called before 'walk' call
+    '-walk': function() {			// called before 'walk' call
         console.log('before walk')	
     },
-    '+walk': function() {				// called after 'walk' call
+    '+walk': function() {			// called after 'walk' call
         console.log('after walk')
     },
     fly: function() {
@@ -112,24 +112,24 @@ var Superman = Human.extend({
 })
 
 var human = new Human()
-human.walk()								// -> walk: 2
-console.log( human.getScore() )				// -> 1000
-console.log( human.getName() )				// -> John
-console.log( human.getOptions() )			// -> ['super']
+human.walk()					// -> walk: 2
+console.log( human.getScore() )			// -> 1000
+console.log( human.getName() )			// -> John
+console.log( human.getOptions() )		// -> ['super']
 
-human.run()									// -> call method run()
-human.run( '1' )							// -> call method human['run|1']()
-human.run( '1', '2' )						// -> call method human['run|2']()
-human.run( '1', '2', '3' )					// -> call method human['run|3']()
-human.run( '1', '2', '3', '4' )				// -> call default method run()
+human.run()					// -> call method run()
+human.run( '1' )				// -> call method human['run|1']()
+human.run( '1', '2' )				// -> call method human['run|2']()
+human.run( '1', '2', '3' )			// -> call method human['run|3']()
+human.run( '1', '2', '3', '4' )			// -> call default method run()
  
 var superman = new Superman()
-superman.walk()								// -> before walk
-											// -> walk: 10
-											// -> after walk
-superman.fly()								// -> fly: 10
-superman.getFly()							// Error, Attribute plugin blacklisted,
-											// there is no generated method with name 'getFly'
+superman.walk()					// -> before walk
+						// -> walk: 10
+						// -> after walk
+superman.fly()					// -> fly: 10
+superman.getFly()				// Error, Attribute plugin blacklisted,
+						// there is no generated method with name 'getFly'
 
 console.log( human instanceof Human ) 		// -> true
 console.log( human instanceof Superman )	// -> false
@@ -143,13 +143,13 @@ To configure Embryo :
 ```javascript
 Embryo.configure({
     cstrName: 'init',				// default class constructor name
-    cstrArrayName: '_types',        // default constructors array name
+    cstrArrayName: '_types',        		// default constructors array name
     forceCstr: true,				// class constructor required ?
-    nameType: '_type',              // default class type property name
-    typeDefault: 'Embryo',          // default class type value
-    forceTyping: true,              // add a default class type if not exists
-    nameProperties: 'properties',   // default property object name
-    nameBlacklist: '_blacklist',	// array key witch contains disabled plugins names	
+    nameType: '_type',              		// default class type property name
+    typeDefault: 'Embryo',          		// default class type value
+    forceTyping: true,              		// add a default class type if not exists
+    nameProperties: 'properties',   		// default property object name
+    nameBlacklist: '_blacklist',		// array key witch contains disabled plugins names	
     deleteBlacklist: true			// delete blacklist array before class instanciation ?
 })
 ```
@@ -167,9 +167,9 @@ To configure Attribute plugin :
 
 ```javascript
 Embryo.plugins('Attribute').configure({
-	getPrefix: 'get',		// default get prefix name
-    setPrefix: 'set',		// default set prefix name
-    camelize: true			// camelize generated methods names (getscore or getScore)
+	getPrefix: 'get',			// default get prefix name
+	setPrefix: 'set',			// default set prefix name
+	camelize: true				// camelize generated methods names (getscore or getScore)
 })
 ```
 
@@ -178,9 +178,9 @@ To configure BeforeAfter plugin :
 
 ```javascript
 Embryo.plugins('BeforeAfter').configure({
-	beforePrefix: '-',		// default before trigger prefix in method name (ex: -score)
-    afterPrefix: '+',		// default after trigger prefix in method name (ex: +score)
-    hiddenPrefix: '_bah_'	// default prefix for hidden method (ex: score() -> call _bah_score())
+	beforePrefix: '-',	// default before trigger prefix in method name (ex: -score)
+	afterPrefix: '+',	// default after trigger prefix in method name (ex: +score)
+	hiddenPrefix: '_bah_'	// default prefix for hidden method (ex: score() -> call _bah_score())
 })
 ```
 
@@ -189,8 +189,8 @@ To configure Surcharge plugin :
 
 ```javascript
 Embryo.plugins('Surcharge').configure({
-	suffix: '|',			// default trigger suffix in method name (ex: score|2)
-    hiddenPrefix: '_pm_'	// default prefix for hidden method (ex: score() -> call _pm_score())
+	suffix: '|',		// default trigger suffix in method name (ex: score|2)
+	hiddenPrefix: '_pm_'	// default prefix for hidden method (ex: score() -> call _pm_score())
 })
 ```
 
@@ -201,13 +201,13 @@ To create your plugin, simply create a new instance of Plugin, configure it and 
 
 ```javascript
 var MyPlugin = Embryo.Plugin.extend({
-    name: 'MyPlugin',						// your plugin's name
+    name: 'MyPlugin',				// your plugin's name
     options: {
-        option1: 'value1',					// your plugin's options...
+        option1: 'value1',			// your plugin's options...
         option2: 'value2',
         option3: 'value3'
     },
-    init: function() {						// your plugin's constructor
+    init: function() {				// your plugin's constructor
         
     },
     //
@@ -218,36 +218,38 @@ var MyPlugin = Embryo.Plugin.extend({
     //
     exec: function( o, debug, child ) {
 
-		// Check if your plugin is blacklisted for this class
+	// Check if your plugin is blacklisted for this class
         if (this.isBlacklisted( o )) {
             debug && console.log( '[' + this.name + '] - SKIPPED' )
             return o
         }
 
-		// if debug mode is enabled for this plugin,
-		// show all class property before class creation
+	// if debug mode is enabled for this plugin,
+	// show all class property before class creation
         debug && debug( this.name, 'BEFORE', o )
 
         // your plugin's code...        
 
-		// if debug mode is enabled for this plugin,
-		// show all class property after class creation
+	// if debug mode is enabled for this plugin,
+	// show all class property after class creation
         debug && debug( this.name, 'AFTER', o )
 
-		// return new class properties
+	// return new class properties
         return o
     }
 })
 
 // Create an instance of your plugin
 var myPlugin = new MyPlugin()
+
 // Tell embryo to use your new plugin
 // use( plugin, debug )
 Embryo.use( myPlugin, false )
+
 // Now, you will able to reconfigure your plugin later...
 Embryo.plugins('MyPlugin').configure({
 	option1: 'value1',					// your plugin's options...
-    option2: 'value2',
-    option3: 'value3' 
+	option2: 'value2',
+	option3: 'value3' 
 })
 ```
