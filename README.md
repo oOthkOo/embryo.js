@@ -28,16 +28,21 @@ Installation
 -----
 <h4>NodeJS</h4>
 To install node embryo module from npm repository :
-``` sh
+
+```javascript
   npm install embryo
 ```
+
 <h4>Browser</h4>
 To use Embryo in browser, just insert this tag in your html :
-```html
+
+```javascript
 <script src="dist/embryo-0.1.1.min.js" type="text/javascript"></script>
 ```
+
 Usage
 -----
+
 ```javascript
 var Embryo = require('embryo')
 
@@ -134,6 +139,7 @@ console.log( superman instanceof Human )	// -> true
 Configure
 -----
 To configure Embryo :
+
 ```javascript
 Embryo.configure({
     cstrName: 'init',				// default class constructor name
@@ -147,6 +153,7 @@ Embryo.configure({
     deleteBlacklist: true			// delete blacklist array before class instanciation ?
 })
 ```
+
 Plugins
 -----
 Embryo enables by default 4 plugins :
@@ -156,6 +163,8 @@ Embryo enables by default 4 plugins :
 
 <h4>Attribute</h4>
 To configure Attribute plugin :
+
+
 ```javascript
 Embryo.plugins('Attribute').configure({
 	getPrefix: 'get',		// default get prefix name
@@ -163,8 +172,10 @@ Embryo.plugins('Attribute').configure({
     camelize: true			// camelize generated methods names (getscore or getScore)
 })
 ```
+
 <h4>BeforeAfter</h4>
 To configure BeforeAfter plugin :
+
 ```javascript
 Embryo.plugins('BeforeAfter').configure({
 	beforePrefix: '-',		// default before trigger prefix in method name (ex: -score)
@@ -172,18 +183,22 @@ Embryo.plugins('BeforeAfter').configure({
     hiddenPrefix: '_bah_'	// default prefix for hidden method (ex: score() -> call _bah_score())
 })
 ```
+
 <h4>Surcharge</h4>
 To configure Surcharge plugin :
+
 ```javascript
 Embryo.plugins('Surcharge').configure({
 	suffix: '|',			// default trigger suffix in method name (ex: score|2)
     hiddenPrefix: '_pm_'	// default prefix for hidden method (ex: score() -> call _pm_score())
 })
 ```
+
 Your plugin
 -----
 <h4>Create your plugin</h4>
 To create your plugin, simply create a new instance of Plugin, configure it and use it !
+
 ```javascript
 var MyPlugin = Embryo.Plugin.extend({
     name: 'MyPlugin',						// your plugin's name
