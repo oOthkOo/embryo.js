@@ -8,7 +8,7 @@ var BeforeAfter = Embryo.Plugin.extend({
         hiddenPrefix: '_pm_'
     },
     init: function() {
-        
+
     },
     exec: function( o, debug, child ) {
 
@@ -51,7 +51,7 @@ var BeforeAfter = Embryo.Plugin.extend({
                         }
                         method.before = true
                     }
-                }  
+                }
             }
         }
 
@@ -79,21 +79,21 @@ var BeforeAfter = Embryo.Plugin.extend({
             o[name] = function () {
                 this[beforeMethod].apply(this, arguments)
                 this[method].apply(this, arguments)
-                this[afterMethod].apply(this, arguments)
+                return this[afterMethod].apply(this, arguments)
             }
         }
         else if (before) {
             o[name] = function () {
                 this[beforeMethod].apply(this, arguments)
-                this[method].apply(this, arguments)
+                return this[method].apply(this, arguments)
             }
         }
         else {
             o[name] = function () {
                 this[method].apply(this, arguments)
-                this[afterMethod].apply(this, arguments)
+                return this[afterMethod].apply(this, arguments)
             }
-        }        
+        }
     }
 })
 

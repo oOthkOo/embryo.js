@@ -11,7 +11,7 @@ var Dog = Embryo.extend({
     },
 
     init: function() {
-        
+
     },
 
     'bark': function() {
@@ -29,7 +29,7 @@ var Human = Embryo.extend({
 
     properties : {
         name: 'John',
-        score: 1000,        
+        score: 1000,
         options: [
             'super',
             'godness',
@@ -38,7 +38,7 @@ var Human = Embryo.extend({
     },
 
     init: function() {
-        
+
     },
 
     'walk': function() {
@@ -67,8 +67,14 @@ var Human = Embryo.extend({
 
     'run|3': function( arg1, arg2, arg3 ) {
         console.log('3 args')
+    },
+
+    '$isDead': function( lifes ) {
+        return lifes < 1
     }
 })
+
+console.log('isDead', Human.isDead(2))
 
 var Superman = Human.extend({
 
@@ -79,7 +85,7 @@ var Superman = Human.extend({
     ],*/
 
     init: function() {
-        
+
     },
 
     fly: function() {

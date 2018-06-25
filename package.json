@@ -1,7 +1,7 @@
 {
   "name": "embryo",
   "preferGlobal": "true",
-  "version": "0.1.1",
+  "version": "0.1.5",
   "engines" : {
     "node" : ">=0.8"
   },
@@ -9,10 +9,10 @@
     "name": "Tierry Danquin",
     "email": "contact@oothkoo.com",
     "url": "http://www.oothkoo.com"
-  },  
+  },
   "homepage" : "https://github.com/oOthkOo/embryo.js",
   "description": "The most simple, customizable and easy to use JavaScript standard inheritance library",
-  "main": "lib/main",  
+  "main": "lib/main",
   "keywords": [
     "embryo",
     "inheritance",
@@ -20,6 +20,7 @@
     "instanceof",
     "plugins",
     "extend",
+    "static",
     "new",
     "inherit",
     "inherits",

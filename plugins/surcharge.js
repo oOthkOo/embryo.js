@@ -8,7 +8,7 @@ var Surcharge = Embryo.Plugin.extend({
     },
     methods: [],
     init: function() {
-        
+
     },
     exec: function( o, debug, child ) {
 
@@ -38,7 +38,7 @@ var Surcharge = Embryo.Plugin.extend({
                             }
                         }
                     }
-                }  
+                }
             }
         }
 
@@ -73,8 +73,8 @@ var Surcharge = Embryo.Plugin.extend({
                     throw new Error( 'method "' + fname + '" not defined.' )
                 }
             }
-            this[fname].apply(this, arguments)
-        }        
+            return this[fname].apply(this, arguments)
+        }
     }
 })
 
