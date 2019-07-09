@@ -1,6 +1,4 @@
-# Embryo.js ![Travis Status](https://travis-ci.org/oOthkOo/embryo.js.png) [![SlugBay Badge](https://www.slugbay.com/pictures/badges/slugbay-simple.svg)](https://www.slugbay.com)
-
-[![NPM](https://nodei.co/npm/embryo.png?downloads=true)](https://nodei.co/npm/embryo/) [![NPM](https://nodei.co/npm-dl/embryo.png?months=5&height=2)](https://nodei.co/npm/embryo/)
+# Embryo.js ![Travis Status](https://travis-ci.org/oOthkOo/embryo.js.png) [![SlugBay Badge](https://www.slugbay.com/pictures/badges/slugbay-simple.svg)](https://www.slugbay.com) [![Shields Badge](https://img.shields.io/npm/dm/embryo.svg?style=for-the-badge)](https://www.npmjs.com/package/embryo)
 
 The most simple, customizable and easy to use JavaScript standard inheritance library.
 
