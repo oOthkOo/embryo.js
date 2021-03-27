@@ -1,5 +1,5 @@
 /**
-    Embryo version 0.1.5
+    Embryo version 0.1.6
     Author:
         Tierry Danquin
     Github:
@@ -101,7 +101,7 @@ var Embryo = function() {
     //console.log('---END---')
 }
 
-Embryo.version = '0.1.5'
+Embryo.version = '0.1.6'
 
 Embryo.extend = function( o ) {
 
