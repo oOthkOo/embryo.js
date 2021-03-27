@@ -271,3 +271,13 @@ Embryo.plugins('MyPlugin').configure({
 	option3: 'value3'
 })
 ```
+
+Donations
+-----
+
+:heart: Donations are always welcome :heart:.
+
+Coins | Symbols | Addresses
+--- | --- | ---
+<img src="https://github.com/oOthkOo/hyper-manager/blob/main/pictures/btc.svg" alt="Bitcoin"/> | BTC | 3B52fbzNFQTaKZxWf5GrCUsASD2UP8na4A
+<img src="https://github.com/oOthkOo/hyper-manager/blob/main/pictures/eth.svg" alt="Ethereum"/> | ETH | 0x1C389f1f85Cdb3C2996b83fAc87E496A80698B7C
